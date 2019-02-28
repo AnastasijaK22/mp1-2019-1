@@ -63,6 +63,7 @@ public:
 		name[number-1] = new char[len + 1];
 		strcpy_s(name[number-1], 15, _name);
 	}
+	// метод - разница между событием и заданной датой
 	int difference(int _year, int _month, int _day, int index, int *a)
 	{
 		int temp_year, temp_month, temp_day;
@@ -132,12 +133,14 @@ public:
 		//printf("%d %d %d\n", temp_year, temp_month, temp_day);
 		return 1;
 	}
+	// сдвиг даты события
 	int shift(int _year, int _month, int _day, int index, bool direction)
 	{
+		index--;
 		if (index >= number)
 			return -1;
-		int flag;
-		int flag2;
+		int flag = 0;
+		int flag2 = 0;
 		if (direction)
 		{
 			flag = (day[index] + _day) / (max_values[month[index]-1]+1);
@@ -148,9 +151,21 @@ public:
 		}
 		else
 		{
-				
+			if (day[index] - _day <= 0)
+				flag = 1;
+			if (month[index] - 1 - flag == -1)
+				flag2 = 1;
+			day[index] = day[index] - _day + max_values[month[index] - 1 - flag + 12*flag2] * flag;
+			month[index] = month[index] - flag + 12 * flag2;
+			year[index] = year[index] - flag2;
+			flag2 = 0;
+			if ((month[index] - _month) <= 0)
+				flag2 = 1;
+			month[index] = month[index] - _month + 12 * flag2;
+			year[index] = year[index] - _year - flag2;
 		}
 	}
+	// вывод события
 	void print()
 	{
 		for (int i = 0; i < number; i++)
@@ -159,13 +174,45 @@ public:
 			puts(name[i]);
 		}
 	}
+	void search_event(char *s)
+	{
+		int len_name;
+		int i;
+		char *p;
+		int len_s = strlen(s);
+		for (i = 0; i < number; i++)
+		{
+			len_name = strlen(name[i]);
+			if ((len_name == len_s))
+			{
+				p = strstr(name[i], s);
+				if (p != NULL)
+					break;
+			}
+		}
+		if (i == number)
+			printf("Нет такого события");
+		else
+		{
+			printf("%d год %d месяц %d день \n", year[i], month[i], day[i]);
+			puts(name[i]);
+		}
+	}
+	~Calendar_events()
+	{
+		for (int i = 0; i < number; i++)
+		{
+			delete[]name[i];
+		}
+		delete[]name;
+	}
 };
 int main()
 {
 	setlocale(LC_ALL, "Rus");
 	Calendar_events c1;
 	int a[3];
-	int year[3] = { 2000, 1998, 2001 }, month[3] = { 3, 6, 12 }, day[3] = { 27, 22, 24 }, number = 3;
+	int year[3] = { 2000, 1998, 2001 }, month[3] = { 3, 1, 12 }, day[3] = { 27, 22, 24 }, number = 3;
 	char **s;
 	s = new char*[3];
 	for (int i = 0; i < number; i++)
@@ -181,12 +228,13 @@ int main()
 	strcpy_s(s1,7,"named");
 	//c1.set_event(_year, _month, _day,s1);
 	Calendar_events c3(c1);
-	//c3.print();
+	c2.print();
 	if (c2.difference(1999, 12, 22, 1, a) == 1)
 		for (int i = 0; i < 3; i++)
 			printf("%d ", a[i]);
 	printf("\n");
-	c2.shift(1, 5, 10, 1,true);
+	c2.shift(1, 2, 25, 1,false);
 	c2.print();
+	c2.search_event(s[0]);
 	_getch();
 }
