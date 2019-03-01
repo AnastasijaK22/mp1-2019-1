@@ -9,8 +9,15 @@ class Calendar_events
 	int month[30];
 	int day[30];
 	int number;
-	char **name;
 	int max_values[12] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+	char **name;
+	//функция для копирования строки
+	void mycpy(int len, int i, char *s1)
+	{
+		for (int j = 0; j < len; j++)
+			name[i][j] = s1[j];
+		name[i][len] = '\0';
+	}
 public:
 	//конструктор по умолчанию
 	Calendar_events();
@@ -28,6 +35,8 @@ public:
 	void print();
 	// поиск события
 	void search_event(char *s);
+	// оператор присваивания
+	Calendar_events& operator=(const Calendar_events &c);
 	//деструктор
 	~Calendar_events()
 	{
@@ -36,28 +45,6 @@ public:
 			delete[] name[i];
 		}
 		delete[] name;
-	}
-	Calendar_events& operator=(const Calendar_events &c)
-	{
-		if (this == &c)
-			return *this;
-		for (int i = 0; i < number; i++)
-		{
-			delete[] name[i];
-		}
-		delete[] name;
-		number = c.number;
-		name = new char*[30];
-		for (int i = 0; i < number; i++)
-		{
-			year[i] = c.year[i];
-			month[i] = c.month[i];
-			day[i] = c.day[i];
-			int len = strlen(c.name[i]);
-			name[i] = new char[len + 1];
-			strcpy_s(name[i], 15, c.name[i]);
-		}
-		return *this;
 	}
 };
 Calendar_events::Calendar_events()
@@ -81,7 +68,7 @@ Calendar_events::Calendar_events(int _number, int* _year, int* _month, int* _day
 		day[i] = _day[i];
 		int len = strlen(_name[i]);
 		name[i] = new char[len + 1];
-		strcpy_s(name[i], 30, _name[i]);
+		mycpy(len, i, _name[i]);
 	}
 }
 Calendar_events::Calendar_events(const Calendar_events &c)
@@ -95,8 +82,30 @@ Calendar_events::Calendar_events(const Calendar_events &c)
 		day[i] = c.day[i];
 		int len = strlen(c.name[i]);
 		name[i] = new char[len + 1];
-		strcpy_s(name[i], 30, c.name[i]);
+		mycpy(len, i, c.name[i]);
 	}
+}
+Calendar_events& Calendar_events::operator=(const Calendar_events &c)
+{
+	if (this == &c)
+		return *this;
+	for (int i = 0; i < number; i++)
+	{
+		delete[] name[i];
+	}
+	delete[] name;
+	number = c.number;
+	name = new char*[30];
+	for (int i = 0; i < number; i++)
+	{
+		year[i] = c.year[i];
+		month[i] = c.month[i];
+		day[i] = c.day[i];
+		int len = strlen(c.name[i]);
+		name[i] = new char[len + 1];
+		mycpy(len, i, c.name[i]);
+	}
+	return *this;
 }
 void Calendar_events::print()
 {
@@ -114,8 +123,7 @@ void Calendar_events::set_event(int _year, int _month, int _day, char *_name)
 		day[number - 1] = _day;
 		int len = strlen(_name);
 		name[number - 1] = new char[len + 1];
-		strcpy_s(name[number - 1], 30, _name);
-	
+		mycpy(len, number-1, _name);
 }
 void Calendar_events::search_event(char *s)
 {
@@ -238,7 +246,6 @@ int Calendar_events::difference(int _year, int _month, int _day, int index, int 
 	a[0] = temp_year;
 	a[1] = temp_month;
 	a[2] = temp_day;
-	//printf("%d %d %d\n", temp_year, temp_month, temp_day);
 	return 1;
 }
 int main()
@@ -325,5 +332,8 @@ int main()
 		c2.shift(1, 2, 25, 1, false);
 		c2.print();
 	}
+	c2 = c1;
+	printf("Приравняли события из 2 календаря 1:\n");
+	c2.print();
 	_getch();
 }
