@@ -27,18 +27,20 @@ public:
 	void set_function(double(*func)(double));
 	// метод - установить число точек
 	void set_points(int _points);
-	// метод - вывести число точек
-	void print_points();
+	// метод - узнать число точек
+	int get_points() const;
 	// метод - установить границы отрезка
 	void set_bounds(double left, double right);
-	// метод - вывод границ отрезка
-	void print_bounds();
+	// метод - узнать границы отрезка
+	void get_bounds(double &left, double &right) const;
 	// метод - табулирование
 	void tabulation();
 	// метод - вывести результаты табулирования
 	void print_tab();
 	// метод - вывести результаты табулирования в файл
 	void filePrint_tab(char *name = "task3.txt");
+	// метод - вывод на экран начальных значений
+	void print() const;
 	// деструктор
 	~Function_tab();
 };
@@ -74,6 +76,8 @@ Function_tab::Function_tab(const Function_tab &c)
 }
 Function_tab& Function_tab::operator=(const Function_tab &c)
 {
+	if (this == &c)
+		return *this;
 	left_bound = c.left_bound;
 	right_bound = c.right_bound;
 	points = c.points;
@@ -111,9 +115,9 @@ void Function_tab::set_points(int _points)
 	}
 	it_count = false;
 }
-void Function_tab::print_points()
+int Function_tab::get_points() const
 {
-	printf("Текущее число точек табулирования: %d\n", points);
+	return points;
 }
 void Function_tab::set_bounds(double left, double right)
 {
@@ -123,9 +127,10 @@ void Function_tab::set_bounds(double left, double right)
 	right_bound = right;
 	it_count = false;
 }
-void Function_tab::print_bounds()
+void Function_tab::get_bounds(double &left, double &right) const 
 {
-	cout << "Левая граница: " << left_bound << endl << "Правая граница: " << right_bound << endl;
+	left = left_bound;
+	right = right_bound;
 }
 void Function_tab::tabulation()
 {
@@ -163,6 +168,15 @@ void Function_tab::filePrint_tab(char *name)
 	for (int i = 0; i < points; i++)
 		f << setw(5) << i + 1 << "|" << setw(10) << values[0][i] << setw(10) << "|" << values[1][i] << endl;
 	f.close();
+}
+void Function_tab::print() const
+{
+	if (!func_set)
+		cout << "Функция не задана" << endl;
+	else
+		cout << "Функция задана" << endl;
+	cout << "Текущее число точек табулирования: " << points << endl;
+	cout << "Левая граница: " << left_bound << endl << "Правая граница: " << right_bound << endl;
 }
 Function_tab::~Function_tab()
 {
@@ -228,8 +242,10 @@ int main()
 		}
 	} 
 	while (!flag);
-	a.print_bounds();
-	a.print_points();
+	left = 0; right = 0;
+	a.get_bounds(left, right);
+	cout << "Левая граница: " << left << endl <<"Правая граница: " << right << endl;
+	cout << "Число точек табулирования:" << a.get_points() << endl;
 	a.tabulation();
 	a.print_tab();
 	do
@@ -243,8 +259,7 @@ int main()
 	if (z == 1)
 		a.filePrint_tab();
 	Function_tab b;
-	b.print_bounds();
-	b.print_points();
+	b.print();
 	do
 	{
 		cout << "Хотите провести табуляцию" << endl << "1 - да, 0 - нет" << endl;
@@ -267,9 +282,9 @@ int main()
 	cout << "Надо задать функцию" << endl;
 	cout << "Выберите функцию:" << endl;
 	cout << "0 - exp" << endl
-		<< "1 - sin" << endl
-		<< "2 - cos" << endl
-		<< "3 - sqrt" << endl;
+		 << "1 - sin" << endl
+		 << "2 - cos" << endl
+		 << "3 - sqrt" << endl;
 	do
 	{
 		cout << "Введите номер от 0 до 3" << endl;
