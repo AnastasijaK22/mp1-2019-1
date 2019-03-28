@@ -118,6 +118,8 @@ Time_Interval::Time_Interval(int stHour, int stMinute, int fHour, int fMinute)
 		throw "Неверно введен час";
 	if ((stMinute < 0) || (stMinute > 60) || (fMinute < 0) || (fMinute > 60))
 		throw "Неверно введены минуты";
+	if ((stHour > fHour) || ((stHour == fHour) && (stMinute > fMinute)))
+		throw "Неверно введен интервал";
 	start_hour = stHour;
 	start_minute = stMinute;
 	final_hour = fHour;
@@ -132,7 +134,7 @@ void Time_Interval::get_interval(int &stHour, int &stMinute, int &fHour, int &fM
 }
 void Time_Interval::set_interval(int stHour, int stMinute, int fHour, int fMinute)
 {
-	Time_Interval temp;
+	Time_Interval temp(stHour, stMinute, fHour, fMinute);
 	*this = temp;
 }
 Step_meter::Step_meter()
@@ -370,7 +372,7 @@ void Step_meter::file_print(int i, char *s)
 void Step_meter::print() const
 {
 	for (int i = 0; i <= current; i++)
-		cout << date_counting[i] << interval_counting[i] << steps[i] << endl;
+		cout << i << " " << date_counting[i] << interval_counting[i] << steps[i] << endl;
 }
 Step_meter::~Step_meter()
 {
@@ -391,5 +393,108 @@ ostream& operator<<(ostream &os, const Time_Interval &t)
 int main()
 {
 	setlocale(LC_ALL, "Rus");
+	bool flag;
+	int temp;
+	int step;
+	Date d;
+	Time_Interval t;
+	Step_meter s;
+	do
+	{
+		flag = true;
+		int year, month, day;
+		cout << "Введите дату (день, месяц, год): " << endl;
+		cin >> day >> month >> year;
+		try 
+		{
+			d.set_date(year, month, day);
+		} 
+		catch (char *s)
+		{
+			cout << s << endl;
+			flag = false;
+		}
+		s.set_time(d);
+	} 
+	while (!flag);
+	int count = 0;
+	do
+	{
+		do
+		{
+			flag = true;
+			int h1, m1, h2, m2, step;
+			cout << "Введите временной интервал (час, минуты, час, минуты): " << endl;
+			cin >> h1 >> m1 >> h2 >> m2;
+			cout << "Введите шаги: ";
+			cin >> step;
+			try
+			{
+				t.set_interval(h1, m1, h2, m2);
+				s.set_counting(t, step);
+			}
+			catch (char *s)
+			{
+				cout << s << endl;
+				flag = false;
+			}
+		} while (!flag);
+		count++;
+		if (count > 3)
+		{
+			cout << "Хотите ввести новую дату? Введите 1 - если да" << endl;
+			cin >> temp;
+			if (temp == 1)
+			{
+				count = 0;
+				do
+				{
+					flag = true;
+					int year, month, day;
+					cout << "Введите дату (день, месяц, год): " << endl;
+					cin >> day >> month >> year;
+					try
+					{
+						d.set_date(year, month, day);
+					}
+					catch (char *s)
+					{
+						cout << s << endl;
+						flag = false;
+					}
+					s.set_time(d);
+				} while (!flag);
+			}
+		}
+		cout << "Хотите ввести еще? Введите 1 - если да" << endl;
+		cin >> temp;
+	} 
+	while (temp == 1);
+	cout << "Текущая дата: "<< s.get_time() << endl;
+	s.print();
+	cout << "Введи индекс подсчета: " << endl;
+	cin >> temp;
+	flag = true;
+	try
+	{
+		s.put_counting(temp, step, d, t);
+	}
+	catch (char *s)
+	{
+		cout << s << endl;
+		flag = false;
+	}
+	if (flag)
+		cout << d << t << step << endl;
+	cout << "Среднее значение шагов в пятницу: " << s.average_inDay(5) << endl;
+	cout << "Среднее значение шагов в апреле: " << s.average_inMonth(4) << endl;
+	cout << "Среднее значение шагов за все время: " << s.average_inMonth(13) << endl;
+	s.max_inMonth(0, 13, step, d);
+	cout << "Максимальное значение шагов за все время: " << step << " " << d << endl;
+	Step_meter s1 = s;
+	s1.file_get();
+	s1.print();
+	s = s1;
+	s.file_print();
 	_getch();
 }
