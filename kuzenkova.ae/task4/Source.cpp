@@ -75,11 +75,11 @@ public:
 	// метод - найти максимальное значение шагов 
 	void max_inMonth(int day, int month, int &max_step, Date &dat) const;
 	// метод - выдать информацию о подсчете
-	void put_counting(int index, int &step, Date &dat, Time_Interval &time) const;
+	void get_counting(int index, int &step, Date &dat, Time_Interval &time) const;
 	// метод - считать данные из файла
-	void file_get(char *s = "task4.txt");
+	void load_from_file(char *s = "task4.txt");
 	// метод - вывести данные в файл
-	void file_print(int i = 0, char *s = "task4.txt");
+	void save_to_file(int i = 0, char *s = "task4.txt");
 	// метод - вывод подсчетов
 	void print() const;
 	// деструктор
@@ -281,7 +281,7 @@ void Step_meter::max_inMonth(int day, int month, int &max_step, Date &dat) const
 	for (int i = 1; i <= current; i++)
 		if (((month == 13) || ((date_counting[i].get_month() == month) && (date_counting[i].get_day() == day))) && (steps[max_step] < steps[i]))
 			max_step = i;
-	if ((max_step == 0) && ((date_counting[0].get_month() != month) || (date_counting[0].get_day() != day)))
+	if ((max_step == 0) && ((date_counting[0].get_month() != month) || (date_counting[0].get_day() != day)) && (month != 13))
 	{
 		dat.set_date(1901, 1, 1);
 		max_step = 0;
@@ -292,7 +292,7 @@ void Step_meter::max_inMonth(int day, int month, int &max_step, Date &dat) const
 		max_step = steps[max_step];
 	}
 }
-void Step_meter::put_counting(int index, int &step, Date &dat, Time_Interval &time) const
+void Step_meter::get_counting(int index, int &step, Date &dat, Time_Interval &time) const
 {
 	if (index > current)
 		throw "Неправильный индекс";
@@ -300,7 +300,7 @@ void Step_meter::put_counting(int index, int &step, Date &dat, Time_Interval &ti
 	dat = date_counting[index];
 	time = interval_counting[index];
 }
-void Step_meter::file_get(char *s)
+void Step_meter::load_from_file(char *s)
 {
 	ifstream fin(s);
 	if (!fin.is_open())
@@ -356,7 +356,7 @@ void Step_meter::file_get(char *s)
 	}
 	fin.close();
 }
-void Step_meter::file_print(int i, char *s)
+void Step_meter::save_to_file(int i, char *s)
 {
 	ofstream fout;
 	if (i != 0)
@@ -477,7 +477,7 @@ int main()
 	flag = true;
 	try
 	{
-		s.put_counting(temp, step, d, t);
+		s.get_counting(temp, step, d, t);
 	}
 	catch (char *s)
 	{
@@ -492,9 +492,9 @@ int main()
 	s.max_inMonth(0, 13, step, d);
 	cout << "Максимальное значение шагов за все время: " << step << " " << d << endl;
 	Step_meter s1 = s;
-	s1.file_get();
+	s1.load_from_file();
 	s1.print();
 	s = s1;
-	s.file_print();
+	s.save_to_file();
 	_getch();
 }
