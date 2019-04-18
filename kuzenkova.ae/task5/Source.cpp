@@ -19,9 +19,9 @@ public:
 	Product(int _barcode, int _price, string _name)
 	{
 		if ((_barcode < 1) || (_barcode > 9999))
-			throw "Неверный штрихкод";
+			throw "Неверный штрихкод\n";
 		if (_price < 1)
-			throw "Неверная цена";
+			throw "Неверная цена\n";
 		name = _name;
 		price = _price;
 		barcode = _barcode;
@@ -63,7 +63,7 @@ public:
 		count = 0;
 		ifstream fin(s);
 		if (!fin.is_open())
-			throw "нет такого файла";
+			throw "нет такого файла\n";
 		string temp;
 		while (!fin.eof())
 		{
@@ -123,21 +123,20 @@ public:
 	void scan_product(int _code)
 	{
 		if ((_code < 1) || (_code > 9999))
-			throw 1/*"Неверно введен штрихкод"*/;
+			throw "Неверно введен штрихкод\n";
 		code = _code;
 		choosen = stock.seach(code);
 	}
-	void get_description() const
+	Product get_description() const
 	{
 		if (code == 0)
-			throw 1/*"Не отсканирован товар"*/;
-		if (choosen.get_barcode() == 0)
-			cout << "Такого товара нет";
-		else
-			cout << choosen;
+			throw "Не отсканирован товар\n";
+		return choosen;
 	}
-	bool add_product()
+	bool add_product(int count = 1)
 	{
+		if (count < 1)
+			throw "Неверное число продуктов\n";
 		bool flag = false;
 		if (choosen.get_barcode() != 0)
 		{
@@ -145,18 +144,18 @@ public:
 			for (i = 0; i < quantity; i++)
 				if (choosen_products[i].get_barcode() == code)
 				{
-					quantity_products[i]++;
+					quantity_products[i] += count;
 					break;
 				}
 			if (i == quantity)
 			{
 				choosen_products.push_back(choosen);
-				quantity_products.push_back(1);
+				quantity_products.push_back(count);
 				quantity++;
 			}
 			flag = true;
-			total += choosen.goods_cost(1);
-			total_discount += choosen.goods_discount(1);
+			total += choosen.goods_cost(count);
+			total_discount += choosen.goods_discount(count);
 		}
 		return flag;
 	}
@@ -179,7 +178,7 @@ public:
 	void delete_product(int _code)
 	{
 		if ((_code < 1) || (_code > 9999))
-			throw 1/*"Неверно введен штрихкод"*/;
+			throw "Неверно введен штрихкод\n";
 		for (int i = 0; i < quantity; i++)
 		{
 			if (choosen_products[i].get_barcode() == _code)
@@ -211,5 +210,21 @@ int main()
 	stock.print_barcodes();
 	int a;
 	Cashbox d;
+	do
+	{
+		cin >> a;
+		try
+		{
+			d.scan_product(a);
+			cout << d.get_description() << endl;
+			d.add_product(2);
+		}
+		catch (char  *s)
+		{
+			cout << s;
+		}
+		d.print_check();
+	} 
+	while (1 > 0);
 	cin >> a;
 }
