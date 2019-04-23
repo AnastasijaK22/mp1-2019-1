@@ -71,9 +71,9 @@ public:
 	// метод - печать чека
 	void print_check() const;
 	// метод - удалить продукт
-	void delete_product(int _code);
+	bool delete_product(int _code);
 	// метод - вернуть итоговую сумму
-	float total_sum() const { return total - total_discount; }
+	int total_cost() const { return total - (int)total_discount; }
 };
 
 Product::Product(int _barcode, int _price, string _name)
@@ -117,7 +117,7 @@ int Product::goods_cost(int count) const
 Storage::Storage(string s)
 {
 	count = 0;
-	ifstream fin(s);
+	ifstream fin("task5.txt");
 	if (!fin.is_open())
 		throw "нет такого файла\n";
 	string temp;
@@ -217,14 +217,14 @@ void Cashbox::print_check() const
 			choosen_products[i].product_check(quantity_products[i]);
 		}
 		cout << "Подитог: " << total << endl;
-		cout << "Скидка: " << total_discount << endl;
-		cout << "Итог: " << total - total_discount << endl;
+		cout << "Скидка: " << (int)total_discount << endl;
+		cout << "Итог: " << total - (int)total_discount << endl;
 	}
 	else
 		cout << "Ни один товар не добавлен в чек!" << endl;
 }
 
-void Cashbox::delete_product(int _code)
+bool Cashbox::delete_product(int _code)
 {
 	if ((_code < 1) || (_code > 9999))
 		throw "Неверно введен штрихкод\n";
@@ -237,8 +237,10 @@ void Cashbox::delete_product(int _code)
 			choosen_products.erase(choosen_products.begin() + i);
 			quantity_products.erase(quantity_products.begin() + i);
 			quantity--;
+			return 1;
 		}
 	}
+	return 0;
 }
 
 ostream& operator<<(ostream &os, const Product &t)
@@ -288,7 +290,8 @@ int main()
 	cin >> a;
 	try 
 	{
-		d1.delete_product(a);
+		if (!d1.delete_product(a))
+			cout << "В чеке нет товара с таким штрихкодом" << endl;
 	}
 	catch (char *s)
 	{
@@ -299,7 +302,7 @@ int main()
 	d.scan_product(2341);
 	d.add_product();
 	cout << "Добавили товар " << stock.seach(2341) << endl;
-	//d.print_check();
-	cout << "Итоговая сумма: " << d.total_sum() << endl;
+	d.print_check();
+	cout << "Итоговая сумма: " << d.total_cost() << endl;
 	cin >> a;
 }
