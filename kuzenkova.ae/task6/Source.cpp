@@ -1,4 +1,4 @@
-#include <windows.h>
+п»ї#include <windows.h>
 #include <iostream>
 #include <fstream>
 #include <stdlib.h>
@@ -72,7 +72,7 @@ public:
 	{
 		ifstream fin(s);
 		if (!fin.is_open())
-			throw "нет такого файла\n";
+			throw "РЅРµС‚ С‚Р°РєРѕРіРѕ С„Р°Р№Р»Р°\n";
 		int x1;
 		int y1;
 		fin >> x1;
@@ -232,7 +232,7 @@ Game_field::Game_field(string s)
 {
 	ifstream fin(s);
 	if (!fin.is_open())
-		throw "нет такого файла\n";
+		throw "РЅРµС‚ С‚Р°РєРѕРіРѕ С„Р°Р№Р»Р°\n";
 	int x = 0, y = 0;
 	int _N;
 	int temp;
@@ -389,7 +389,7 @@ void The_Lord_of_the_Snakes::Campany()
 		for (int i = 0; i < 5; i++)
 			if (campany[i] == 1)
 				cout << "        level " << i + 1 << endl;
-		cout << "        назад - 0" << endl;
+		cout << "        РЅР°Р·Р°Рґ - 0" << endl;
 		cout << "  ";
 		while (1 > 0)
 		{
@@ -419,14 +419,14 @@ void The_Lord_of_the_Snakes::Campany()
 		bool flag = Game(d, h);
 		system("cls");
 		if (flag == false)
-			cout << "    Ты проиграл салага!" << endl;
+			cout << "    РўС‹ РїСЂРѕРёРіСЂР°Р» СЃР°Р»Р°РіР°!" << endl;
 		else
 		{
-			cout << "    Ты победил салага!" << endl;
+			cout << "    РўС‹ РїРѕР±РµРґРёР» СЃР°Р»Р°РіР°!" << endl;
 			if (a != 5)
 				campany[a] = 1;
 		}
-		cout << "Хотите продолжить кампанию? 1 -да, 0 -нет" << endl;
+		cout << "РҐРѕС‚РёС‚Рµ РїСЂРѕРґРѕР»Р¶РёС‚СЊ РєР°РјРїР°РЅРёСЋ? 1 -РґР°, 0 -РЅРµС‚" << endl;
 		while (1 > 0)
 		{
 			if (_kbhit())
@@ -445,7 +445,7 @@ void The_Lord_of_the_Snakes::Campany()
 void The_Lord_of_the_Snakes::Common()
 {
 	system("cls");
-	cout << " Установите размер игрового окна (от 10 до 200)" << endl;
+	cout << " РЈСЃС‚Р°РЅРѕРІРёС‚Рµ СЂР°Р·РјРµСЂ РёРіСЂРѕРІРѕРіРѕ РѕРєРЅР° (РѕС‚ 10 РґРѕ 200)" << endl;
 	int n, m;
 	int l;
 	bool temp = true;
@@ -456,13 +456,13 @@ void The_Lord_of_the_Snakes::Common()
 		{
 			cin >> n >> m;
 			set_size(n, m);
-			cout << "Введи победную длину" << endl;
+			cout << "Р’РІРµРґРё РїРѕР±РµРґРЅСѓСЋ РґР»РёРЅСѓ" << endl;
 			cin >> l;
 			set_win_length(l);
 		}
 		catch (int s)
 		{
-			cout << "Введены неверно размеры" << endl;;
+			cout << "Р’РІРµРґРµРЅС‹ РЅРµРІРµСЂРЅРѕ СЂР°Р·РјРµСЂС‹" << endl;;
 			temp = false;
 		}
 	} while (!temp);
@@ -471,10 +471,10 @@ void The_Lord_of_the_Snakes::Common()
 	bool flag = Game(d, h);
 	system("cls");
 	if (flag == false)
-		cout << "    Ты проиграл салага!" << endl;
+		cout << "    РўС‹ РїСЂРѕРёРіСЂР°Р» СЃР°Р»Р°РіР°!" << endl;
 	else
 	{
-		cout << "    Ты победил салага!" << endl;
+		cout << "    РўС‹ РїРѕР±РµРґРёР» СЃР°Р»Р°РіР°!" << endl;
 	}
 	_getch();
 	d.Clear_field();
@@ -487,12 +487,12 @@ bool The_Lord_of_the_Snakes::Game(Game_field &d, Snake &h)
 	int direction = 0;
 	char c;
 	d.Draw_field();
-	cout << "Для начала нажмите любую клавишу" << endl;
+	cout << "Р”Р»СЏ РЅР°С‡Р°Р»Р° РЅР°Р¶РјРёС‚Рµ Р»СЋР±СѓСЋ РєР»Р°РІРёС€Сѓ" << endl;
 	_getch();
 	int l = h.snake_length();
 	system("cls");
-	cout << "Текущая длина змейки: " << l << endl;
-	cout << "Победная длина: " << win_length << endl;
+	cout << "РўРµРєСѓС‰Р°СЏ РґР»РёРЅР° Р·РјРµР№РєРё: " << l << endl;
+	cout << "РџРѕР±РµРґРЅР°СЏ РґР»РёРЅР°: " << win_length << endl;
 	while ((h.am_i_life()) && (h.snake_length() < win_length))
 	{
 
@@ -511,8 +511,8 @@ bool The_Lord_of_the_Snakes::Game(Game_field &d, Snake &h)
 		{
 			system("cls");
 			l++;
-			cout << "Текущая длина змейки: " << l << endl;
-			cout << "Победная длина: " << win_length << endl;
+			cout << "РўРµРєСѓС‰Р°СЏ РґР»РёРЅР° Р·РјРµР№РєРё: " << l << endl;
+			cout << "РџРѕР±РµРґРЅР°СЏ РґР»РёРЅР°: " << win_length << endl;
 		}
 	}
 	if (!h.am_i_life())
@@ -537,11 +537,11 @@ void The_Lord_of_the_Snakes::Menu()
 	while (1 > 0)
 	{
 		system("cls");
-		cout << "      Добро пожаловать!       " << endl;
+		cout << "      Р”РѕР±СЂРѕ РїРѕР¶Р°Р»РѕРІР°С‚СЊ!       " << endl;
 		cout << endl;
-		cout << "      Обычная игра - 1        " << endl;
-		cout << "      Кампания     - 2        " << endl;
-		cout << "      Выход - 0               " << endl;
+		cout << "      РћР±С‹С‡РЅР°СЏ РёРіСЂР° - 1        " << endl;
+		cout << "      РљР°РјРїР°РЅРёСЏ     - 2        " << endl;
+		cout << "      Р’С‹С…РѕРґ - 0               " << endl;
 		char a;
 		cout << "      ";
 		while (1 > 0)
