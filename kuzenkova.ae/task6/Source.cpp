@@ -167,7 +167,6 @@ class The_Lord_of_the_Snakes
 {
 	int sizeN, sizeM;
 	int win_length;
-	bool rejim;
 	int campany[5];
 	bool game_is_set;
 	void set_size(int N, int M);
@@ -404,6 +403,8 @@ void The_Lord_of_the_Snakes::Campany()
 						break;
 				}
 			}
+			if (a == 0)
+				break;
 			if (campany[a - 1] == 1)
 				break;
 		}
@@ -483,14 +484,18 @@ void The_Lord_of_the_Snakes::Common()
 bool The_Lord_of_the_Snakes::Game(Game_field &d, Snake &h)
 {
 	system("cls");
+	COORD position = { 0,0 }; 
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	d.generate_nom_nom();
 	int direction = 0;
 	char c;
 	d.Draw_field();
 	cout << "Для начала нажмите любую клавишу" << endl;
 	_getch();
+	SetConsoleCursorPosition(hConsole, position);
+	cout << "                                " << endl;
+	SetConsoleCursorPosition(hConsole, position);
 	int l = h.snake_length();
-	system("cls");
 	cout << "Текущая длина змейки: " << l << endl;
 	cout << "Победная длина: " << win_length << endl;
 	while ((h.am_i_life()) && (h.snake_length() < win_length))
@@ -509,7 +514,7 @@ bool The_Lord_of_the_Snakes::Game(Game_field &d, Snake &h)
 		h.Draw_snake();
 		if (l != h.snake_length())
 		{
-			system("cls");
+			SetConsoleCursorPosition(hConsole, position);
 			l++;
 			cout << "Текущая длина змейки: " << l << endl;
 			cout << "Победная длина: " << win_length << endl;
@@ -524,7 +529,6 @@ bool The_Lord_of_the_Snakes::Game(Game_field &d, Snake &h)
 The_Lord_of_the_Snakes::The_Lord_of_the_Snakes()
 {
 	win_length = 0;
-	rejim = false;
 	sizeN = 0;
 	sizeM = 0;
 	game_is_set = false;
