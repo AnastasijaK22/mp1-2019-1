@@ -16,6 +16,7 @@ enum Directions { UP = -2, RIGHT = 1, DOWN = 2, LEFT = -1 };
 HWND hwnd = GetConsoleWindow();
 HDC hdc = GetDC(hwnd);
 
+// класс - Квадрат
 class Square
 {
 	COLORREF colors[5] = { BLACK, WHITE, BLUE, GREEN, RED };
@@ -25,13 +26,19 @@ class Square
 	int state;
 
 public:
+	// конструктор инициализатор
 	Square(int x1, int y1, int _a = 10, int _state = 1) : left(x1), top(y1), a(_a), state(_state) {}
+	// метод - нарисовать квадрат
 	void Draw() const;
+	// метод - изменить координаты
 	void change_coordinate(int x1, int y1);
+	// метод - изменить состояние
 	void change_state(int _state) { state = _state; }
+	// метод - получить состояние
 	int get_state() const { return state; }
 };
 
+// класс - игровое поле
 class Game_field
 {
 	vector <vector <Square>> field;
@@ -39,22 +46,36 @@ class Game_field
 	int empty_squares;
 	int x_nom;
 	int y_nom;
-public:
-	Game_field() : N(0), M(0), empty_squares(0), x_nom(-1), y_nom(-1) {}
-	Game_field(int _N, int _M);
-	Game_field(string s);
-	int get_sizeN() const { return N - 2; }
-	int get_sizeM() const { return M - 2; }
+	// метод - установить размер поля
 	void set_size_field(int _N, int _M);
+public:
+	// конструктор по умолчанию
+	Game_field() : N(0), M(0), empty_squares(0), x_nom(-1), y_nom(-1) {}
+	// конструктор инициализатор
+	Game_field(int _N, int _M);
+	// конструктор инициализатор
+	Game_field(string s);
+	// метод - вернуть число строк в поле
+	int get_sizeN() const { return N - 2; }
+	// метод - вернуть число столбцов в поле
+	int get_sizeM() const { return M - 2; }
+	// метод - нарисовать выбранный квадрат поля
 	void Draw_square(int i, int j) const { field[j][i].Draw(); }
+	// метод - нарисовать поле полностью
 	void Draw_field() const;
+	// метод - нарисовать еду
 	void Draw_nom_nom() const { field[y_nom][x_nom].Draw(); }
+	// метод - закрасить поле 
 	void Clear_field();
+	// метод - изменить состояние выбранного квадрата
 	void change_state(int i, int j, int _state);
+	// метод - получить состояние выбранного квадрата
 	int get_state(int i, int j) const { return field[j][i].get_state(); }
+	// метод - сгенерировать еду
 	void generate_nom_nom();
 };
 
+// класс змейка
 class Snake
 {
 	vector <int> x;
@@ -65,9 +86,12 @@ class Snake
 	int x_tail;
 	int y_tail;
 	Game_field &d;
+	// метод - покушать
 	bool nom_nom();
+	// метод - будет ли змейка жива если продолжит двигаться в заданном направлении
 	bool to_be_or_not_to_be();
 public:
+	// конструктор инициализатор
 	Snake(string s, Game_field &d1) : d(d1)
 	{
 		ifstream fin(s);
@@ -92,6 +116,7 @@ public:
 		x_tail = x1 + 5;
 		y_tail = y1;
 	}
+	// конструктор инициализатор
 	Snake(Game_field &d1) : d(d1)
 	{
 		srand(time(NULL));
@@ -114,14 +139,19 @@ public:
 		x_tail = temp_x + 5;
 		y_tail = temp_y;
 	}
+	// метод - изменить направление движения
 	void change_direction(int _direction)
 	{
 		if (direction * (-1) != _direction)
 			direction = _direction;
 	}
+	// метод - переместиться
 	void Move();
-	bool am_i_life() const { return life; }
+	// метод - жива ли змейка
+	bool am_i_alive() const { return life; }
+	// метод - узнать длину змейки
 	int snake_length() const { return length; }
+	// метод - нарисовать змейку
 	void Draw_snake();
 };
 
@@ -163,19 +193,27 @@ public:
 	}
 };
 
+// класс игра
 class The_Lord_of_the_Snakes
 {
 	int sizeN, sizeM;
 	int win_length;
 	int campany[5];
 	bool game_is_set;
+	// метод - установить размер
 	void set_size(int N, int M);
+	// метод - установить победную длину
 	void set_win_length(int l);
+	// метод - запустить кампанию
 	void Campany();
+	// метод - запустить обычную игру
 	void Common();
+	// метод - игра
 	bool Game(Game_field &d, Snake &h);
 public:
+	// конструктор по умолчанию
 	The_Lord_of_the_Snakes();
+	// метод - запустить меню
 	void Menu();
 };
 
@@ -266,14 +304,12 @@ void Game_field::Draw_field() const
 
 void Game_field::Clear_field()
 {
-	RECT r1;
-	r1.left = 50;
-	r1.top = 50;
-	r1.right = 50 + (M + 2) * 10;
-	r1.bottom = 50 + (N + 2) * 10;
-	HBRUSH brush = CreateSolidBrush(WHITE);
-	FillRect(hdc, &r1, brush);
-	DeleteObject(brush);
+	int temp = 0;
+	if (N >= M)
+		temp = N;
+	else temp = M;
+	Square a(70, 70, (temp) * 10);
+	a.Draw();
 }
 
 void Game_field::change_state(int i, int j, int _state)
@@ -374,7 +410,7 @@ void The_Lord_of_the_Snakes::set_size(int N, int M)
 
 void The_Lord_of_the_Snakes::set_win_length(int l)
 {
-	if ((l < 6) || (l > sizeN*sizeM))
+	if ((l < 6) || (l > sizeN*sizeM/2))
 		throw 2;
 	win_length = l;
 }
@@ -498,7 +534,7 @@ bool The_Lord_of_the_Snakes::Game(Game_field &d, Snake &h)
 	int l = h.snake_length();
 	cout << "Текущая длина змейки: " << l << endl;
 	cout << "Победная длина: " << win_length << endl;
-	while ((h.am_i_life()) && (h.snake_length() < win_length))
+	while ((h.am_i_alive()) && (h.snake_length() < win_length))
 	{
 
 		int direction;
@@ -520,7 +556,7 @@ bool The_Lord_of_the_Snakes::Game(Game_field &d, Snake &h)
 			cout << "Победная длина: " << win_length << endl;
 		}
 	}
-	if (!h.am_i_life())
+	if (!h.am_i_alive())
 		return false;
 	else
 		return true;
@@ -557,7 +593,6 @@ void The_Lord_of_the_Snakes::Menu()
 					break;
 			}
 		}
-		//cin >> a;
 		if (a == '2')
 			Campany();
 		if (a == '1')
