@@ -27,13 +27,24 @@ class Square
 
 public:
 	// конструктор инициализатор
-	Square(int x1, int y1, int _a = 10, int _state = 1) : left(x1), top(y1), a(_a), state(_state) {}
+	Square(int x1, int y1, int _a = 10, int _state = 1) : left(x1), top(y1), a(_a), state(_state) 
+	{
+		if (a <= 0)
+			throw "Неверно введен размер";
+		if ((state < 0) || (state > 4))
+			throw "Неверно введено состояние";
+	}
 	// метод - нарисовать квадрат
 	void Draw() const;
 	// метод - изменить координаты
 	void change_coordinate(int x1, int y1);
 	// метод - изменить состояние
-	void change_state(int _state) { state = _state; }
+	void change_state(int _state) 
+	{ 
+		if ((state < 0) || (state > 4))
+			throw "Неверно введено состояние";
+		state = _state; 
+	}
 	// метод - получить состояние
 	int get_state() const { return state; }
 };
@@ -86,6 +97,7 @@ class Snake
 	int x_tail;
 	int y_tail;
 	Game_field &d;
+	Snake& operator=(const Snake &s){};
 	// метод - покушать
 	bool nom_nom();
 	// метод - будет ли змейка жива если продолжит двигаться в заданном направлении
