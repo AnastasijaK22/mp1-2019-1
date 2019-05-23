@@ -167,9 +167,9 @@ public:
 	void Draw_snake();
 };
 
-class Upravlenie
+class Control
 {
-	Upravlenie() {}
+	Control() {}
 	static bool isDown(char c)
 	{
 		if ((c == 235) || (c == 115) || (c == 80) || (c == -21) || (c == -101) || (c == 83))
@@ -195,7 +195,7 @@ class Upravlenie
 		return false;
 	}
 public:
-	static int napravlenie(char c)
+	static int determine_direction(char c)
 	{
 		if (isDown(c)) return DOWN;
 		if (isRight(c)) return RIGHT;
@@ -211,7 +211,6 @@ class The_Lord_of_the_Snakes
 	int sizeN, sizeM;
 	int win_length;
 	int campany[5];
-	bool game_is_set;
 	// метод - установить размер
 	void set_size(int N, int M);
 	// метод - установить победную длину
@@ -368,8 +367,7 @@ bool Snake::to_be_or_not_to_be()
 {
 	if (d.get_state(x[0] + direction % 2, y[0] + direction / 2) == 0)
 		return false;
-	for (int i = 0; i < length - 1; i++)
-		if ((d.get_state(x[0] + direction % 2, y[0] + direction / 2) == 3) && (x[0] + direction % 2 == x[i]) && (y[0] + direction / 2 == y[i]))
+	if ((d.get_state(x[0] + direction % 2, y[0] + direction / 2) == 3) && ((x[0] + direction % 2 != x[length - 1]) || (y[0] + direction / 2 != y[length - 1])))
 			return false;
 	return true;
 }
@@ -406,15 +404,15 @@ void Snake::Move()
 
 void Snake::Draw_snake()
 {
-	d.Draw_nom_nom();
+	//d.Draw_nom_nom();
+	d.Draw_square(x_tail, y_tail);
 	d.Draw_square(x[0], y[0]);
 	d.Draw_square(x[1], y[1]);
-	d.Draw_square(x_tail, y_tail);
 }
 
 void The_Lord_of_the_Snakes::set_size(int N, int M)
 {
-	if ((N < 10) || (N > 200) || (M < 10) || (M > 200))
+	if ((N < 10) || (N > 70) || (M < 10) || (M > 70))
 		throw 1;
 	sizeN = N;
 	sizeM = M;
@@ -494,7 +492,7 @@ void The_Lord_of_the_Snakes::Campany()
 void The_Lord_of_the_Snakes::Common()
 {
 	system("cls");
-	cout << " Установите размер игрового окна (от 10 до 200)" << endl;
+	cout << " Установите размер игрового окна (от 10 до 70)" << endl;
 	int n, m;
 	int l;
 	bool temp = true;
@@ -548,17 +546,16 @@ bool The_Lord_of_the_Snakes::Game(Game_field &d, Snake &h)
 	cout << "Победная длина: " << win_length << endl;
 	while ((h.am_i_alive()) && (h.snake_length() < win_length))
 	{
-
-		int direction;
 		if (_kbhit())
 		{
 			c = _getch();
-			direction = Upravlenie::napravlenie(c);
+			direction = Control::determine_direction(c);
 			if (direction != 0)
 				h.change_direction(direction);
 		}
 		Sleep(175);
 		h.Move();
+		d.Draw_nom_nom();
 		h.Draw_snake();
 		if (l != h.snake_length())
 		{
@@ -579,7 +576,6 @@ The_Lord_of_the_Snakes::The_Lord_of_the_Snakes()
 	win_length = 0;
 	sizeN = 0;
 	sizeM = 0;
-	game_is_set = false;
 	campany[0] = 1;
 	for (int i = 1; i < 5; i++)
 		campany[i] = 0;
