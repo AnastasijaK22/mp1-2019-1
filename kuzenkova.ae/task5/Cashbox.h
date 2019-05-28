@@ -15,7 +15,7 @@ class Cashbox
 public:
 	// конструктор по умолчанию
 	Cashbox() : quantity(0), code(0), total(0), total_discount(0) { }
-	static void set_storage(Storage temp)
+	static void set_storage(Storage &temp)
 	{
 		Cashbox::stock = temp;
 	};
