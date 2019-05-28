@@ -1,11 +1,11 @@
-#include "Storage.h"
+п»ї#include "Storage.h"
 
 Product::Product(int _barcode, int _price, string _name)
 {
 	if ((_barcode < 1) || (_barcode > 9999))
-		throw "Неверный штрихкод\n";
+		throw "РќРµРІРµСЂРЅС‹Р№ С€С‚СЂРёС…РєРѕРґ\n";
 	if (_price < 1)
-		throw "Неверная цена\n";
+		throw "РќРµРІРµСЂРЅР°СЏ С†РµРЅР°\n";
 	name = _name;
 	price = _price;
 	barcode = _barcode;
@@ -27,14 +27,14 @@ void Product::product_check(int count) const
 float Product::goods_discount(int count) const
 {
 	//if (count < 1)
-		//throw "Неверное колтчество товаров";
+		//throw "РќРµРІРµСЂРЅРѕРµ РєРѕР»С‚С‡РµСЃС‚РІРѕ С‚РѕРІР°СЂРѕРІ";
 	return price * count * discount / 100.;
 }
 
 int Product::goods_cost(int count) const
 {
 	//if (count < 1)
-	//throw "Неверное колтчество товаров";
+	//throw "РќРµРІРµСЂРЅРѕРµ РєРѕР»С‚С‡РµСЃС‚РІРѕ С‚РѕРІР°СЂРѕРІ";
 	return price * count;
 }
 
@@ -43,7 +43,7 @@ Storage::Storage(string s)
 	count = 0;
 	ifstream fin("task5.txt");
 	if (!fin.is_open())
-		throw "нет такого файла\n";
+		throw "РЅРµС‚ С‚Р°РєРѕРіРѕ С„Р°Р№Р»Р°\n";
 	string temp;
 	while (!fin.eof())
 	{
@@ -92,6 +92,6 @@ Product Storage::seach(int _code) const
 
 ostream& operator<<(ostream &os, const Product &t)
 {
-	os << t.name << ": цена - " << t.price << " руб., скидка - " << t.discount << "%" << endl;
+	os << t.name << ": С†РµРЅР° - " << t.price << " СЂСѓР±., СЃРєРёРґРєР° - " << t.discount << "%" << endl;
 	return os;
 }

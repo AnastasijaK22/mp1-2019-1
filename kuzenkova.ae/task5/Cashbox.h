@@ -1,7 +1,7 @@
-#pragma once
+п»ї#pragma once
 #include "Storage.h"
 
-// класс - касса
+// РєР»Р°СЃСЃ - РєР°СЃСЃР°
 class Cashbox
 {
 	static Storage stock;
@@ -13,23 +13,23 @@ class Cashbox
 	int total;
 	float total_discount;
 public:
-	// конструктор по умолчанию
+	// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
 	Cashbox() : quantity(0), code(0), total(0), total_discount(0) { }
 	static void set_storage(string s)
 	{
 		Storage temp(s);
 		Cashbox::stock = temp;
 	};
-	// метод - сканировать товар
+	// РјРµС‚РѕРґ - СЃРєР°РЅРёСЂРѕРІР°С‚СЊ С‚РѕРІР°СЂ
 	void scan_product(int _code);
-	// метод - вернуть описание товара
+	// РјРµС‚РѕРґ - РІРµСЂРЅСѓС‚СЊ РѕРїРёСЃР°РЅРёРµ С‚РѕРІР°СЂР°
 	Product get_description() const;
-	// метод - добавить товар в чек
+	// РјРµС‚РѕРґ - РґРѕР±Р°РІРёС‚СЊ С‚РѕРІР°СЂ РІ С‡РµРє
 	bool add_product(int count = 1);
-	// метод - печать чека
+	// РјРµС‚РѕРґ - РїРµС‡Р°С‚СЊ С‡РµРєР°
 	void print_check() const;
-	// метод - удалить продукт
+	// РјРµС‚РѕРґ - СѓРґР°Р»РёС‚СЊ РїСЂРѕРґСѓРєС‚
 	bool delete_product(int _code);
-	// метод - вернуть итоговую сумму
+	// РјРµС‚РѕРґ - РІРµСЂРЅСѓС‚СЊ РёС‚РѕРіРѕРІСѓСЋ СЃСѓРјРјСѓ
 	int total_cost() const { return total - (int)total_discount; }
 };

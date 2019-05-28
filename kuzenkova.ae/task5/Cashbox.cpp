@@ -1,9 +1,9 @@
-#include "Cashbox.h"
+п»ї#include "Cashbox.h"
 
 void Cashbox::scan_product(int _code)
 {
 	if ((_code < 1) || (_code > 9999))
-		throw "Неверно введен штрихкод\n";
+		throw "РќРµРІРµСЂРЅРѕ РІРІРµРґРµРЅ С€С‚СЂРёС…РєРѕРґ\n";
 	code = _code;
 	choosen = stock.seach(code);
 }
@@ -11,14 +11,14 @@ void Cashbox::scan_product(int _code)
 Product Cashbox::get_description() const
 {
 	if (code == 0)
-		throw "Не отсканирован товар\n";
+		throw "РќРµ РѕС‚СЃРєР°РЅРёСЂРѕРІР°РЅ С‚РѕРІР°СЂ\n";
 	return choosen;
 }
 
 bool Cashbox::add_product(int count)
 {
 	if (count < 1)
-		throw "Неверное число продуктов\n";
+		throw "РќРµРІРµСЂРЅРѕРµ С‡РёСЃР»Рѕ РїСЂРѕРґСѓРєС‚РѕРІ\n";
 	bool flag = false;
 	if (choosen.get_barcode() != 0)
 	{
@@ -50,18 +50,18 @@ void Cashbox::print_check() const
 		{
 			choosen_products[i].product_check(quantity_products[i]);
 		}
-		cout << "Подитог: " << total << endl;
-		cout << "Скидка: " << (int)total_discount << endl;
-		cout << "Итог: " << total - (int)total_discount << endl;
+		cout << "РџРѕРґРёС‚РѕРі: " << total << endl;
+		cout << "РЎРєРёРґРєР°: " << (int)total_discount << endl;
+		cout << "РС‚РѕРі: " << total - (int)total_discount << endl;
 	}
 	else
-		cout << "Ни один товар не добавлен в чек!" << endl;
+		cout << "РќРё РѕРґРёРЅ С‚РѕРІР°СЂ РЅРµ РґРѕР±Р°РІР»РµРЅ РІ С‡РµРє!" << endl;
 }
 
 bool Cashbox::delete_product(int _code)
 {
 	if ((_code < 1) || (_code > 9999))
-		throw "Неверно введен штрихкод\n";
+		throw "РќРµРІРµСЂРЅРѕ РІРІРµРґРµРЅ С€С‚СЂРёС…РєРѕРґ\n";
 	for (int i = 0; i < quantity; i++)
 	{
 		if (choosen_products[i].get_barcode() == _code)

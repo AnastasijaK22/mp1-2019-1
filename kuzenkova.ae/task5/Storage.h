@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #include <iostream>
 #include <string>
 #include <vector>
@@ -8,7 +8,7 @@
 
 using namespace std;
 
-//класс - продукт
+//РєР»Р°СЃСЃ - РїСЂРѕРґСѓРєС‚
 class Product
 {
 	string name;
@@ -16,35 +16,35 @@ class Product
 	int discount;
 	int price;
 public:
-	// конструктор по умолчанию
-	Product() : name("Не товар"), price(0), barcode(0), discount(0) {}
-	// конструктор инициализатор
+	// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
+	Product() : name("РќРµ С‚РѕРІР°СЂ"), price(0), barcode(0), discount(0) {}
+	// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РёРЅРёС†РёР°Р»РёР·Р°С‚РѕСЂ
 	Product(int _barcode, int _price, string _name);
-	// метод - установить продукт
+	// РјРµС‚РѕРґ - СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РїСЂРѕРґСѓРєС‚
 	void set_product(int _barcode, int _price, string _name);
-	// метод - вернуть штрихкод
+	// РјРµС‚РѕРґ - РІРµСЂРЅСѓС‚СЊ С€С‚СЂРёС…РєРѕРґ
 	int get_barcode() const { return barcode; }
-	// метод - печать чека с этим товаром
+	// РјРµС‚РѕРґ - РїРµС‡Р°С‚СЊ С‡РµРєР° СЃ СЌС‚РёРј С‚РѕРІР°СЂРѕРј
 	void product_check(int count) const;
-	// метод - вычислить скидку n - ого числа товаров
+	// РјРµС‚РѕРґ - РІС‹С‡РёСЃР»РёС‚СЊ СЃРєРёРґРєСѓ n - РѕРіРѕ С‡РёСЃР»Р° С‚РѕРІР°СЂРѕРІ
 	float goods_discount(int count) const;
-	// метод - вычислить стоимость n - ого числа товаров
+	// РјРµС‚РѕРґ - РІС‹С‡РёСЃР»РёС‚СЊ СЃС‚РѕРёРјРѕСЃС‚СЊ n - РѕРіРѕ С‡РёСЃР»Р° С‚РѕРІР°СЂРѕРІ
 	int goods_cost(int count) const;
-	// вывод на консоль
+	// РІС‹РІРѕРґ РЅР° РєРѕРЅСЃРѕР»СЊ
 	friend ostream& operator<<(ostream &os, const Product &t);
 };
 
-// класс - склад
+// РєР»Р°СЃСЃ - СЃРєР»Р°Рґ
 class Storage
 {
 	vector <Product> goods;
 	int count;
 public:
 	Storage() : count(0) {}
-	// конструктор инициализатор
+	// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РёРЅРёС†РёР°Р»РёР·Р°С‚РѕСЂ
 	Storage(string s);
-	// метод - печать штрихкодов товаров со склада
+	// РјРµС‚РѕРґ - РїРµС‡Р°С‚СЊ С€С‚СЂРёС…РєРѕРґРѕРІ С‚РѕРІР°СЂРѕРІ СЃРѕ СЃРєР»Р°РґР°
 	void print_barcodes() const;
-	// метод - поиска товара по штрихкоду
+	// РјРµС‚РѕРґ - РїРѕРёСЃРєР° С‚РѕРІР°СЂР° РїРѕ С€С‚СЂРёС…РєРѕРґСѓ
 	Product seach(int _code) const;
 };
