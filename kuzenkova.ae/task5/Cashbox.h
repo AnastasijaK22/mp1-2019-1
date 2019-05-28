@@ -4,7 +4,7 @@
 // класс - касса
 class Cashbox
 {
-	static Storage stock;
+	static Storage &stock;
 	vector <Product> choosen_products;
 	vector <int> quantity_products;
 	int quantity;
@@ -15,9 +15,8 @@ class Cashbox
 public:
 	// конструктор по умолчанию
 	Cashbox() : quantity(0), code(0), total(0), total_discount(0) { }
-	static void set_storage(string s)
+	static void set_storage(Storage temp)
 	{
-		Storage temp(s);
 		Cashbox::stock = temp;
 	};
 	// метод - сканировать товар

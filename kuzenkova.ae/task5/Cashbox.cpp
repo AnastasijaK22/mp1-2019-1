@@ -77,4 +77,4 @@ bool Cashbox::delete_product(int _code)
 	return 0;
 }
 
-Storage Cashbox::stock("task5.txt");
+Storage &Cashbox::stock = Storage();

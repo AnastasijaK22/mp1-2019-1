@@ -104,53 +104,9 @@ class Snake
 	bool to_be_or_not_to_be();
 public:
 	// конструктор инициализатор
-	Snake(string s, Game_field &d1) : d(d1)
-	{
-		ifstream fin(s);
-		if (!fin.is_open())
-			throw "нет такого файла\n";
-		int x1;
-		int y1;
-		fin >> x1;
-		fin >> y1;
-		life = true;
-		length = 5;
-		direction = LEFT;
-		x.push_back(x1);
-		y.push_back(y1);
-		d.change_state(x1, y1, 4);
-		for (int i = 1; i < 5; i++)
-		{
-			x.push_back(x1 + i);
-			y.push_back(y1);
-			d.change_state(x1 + i, y1, 3);
-		}
-		x_tail = x1 + 5;
-		y_tail = y1;
-	}
+	Snake(string s, Game_field &d1);
 	// конструктор инициализатор
-	Snake(Game_field &d1) : d(d1)
-	{
-		srand(time(NULL));
-		life = true;
-		length = 5;
-		direction = LEFT;
-		int N = d.get_sizeN();
-		int M = d.get_sizeM();
-		int temp_x = 2 + rand() % (M - 6);
-		int temp_y = 2 + rand() % (N - 2);
-		x.push_back(temp_x);
-		y.push_back(temp_y);
-		d.change_state(temp_x, temp_y, 4);
-		for (int i = 1; i < 5; i++)
-		{
-			x.push_back(temp_x + i);
-			y.push_back(temp_y);
-			d.change_state(temp_x + i, temp_y, 3);
-		}
-		x_tail = temp_x + 5;
-		y_tail = temp_y;
-	}
+	Snake(Game_field &d1);
 	// метод - изменить направление движения
 	void change_direction(int _direction)
 	{
@@ -354,6 +310,54 @@ void Game_field::generate_nom_nom()
 		if (i != M)
 			break;
 	}
+}
+
+Snake::Snake(string s, Game_field &d1) : d(d1)
+{
+	ifstream fin(s);
+	if (!fin.is_open())
+		throw "нет такого файла\n";
+	int x1;
+	int y1;
+	fin >> x1;
+	fin >> y1;
+	life = true;
+	length = 5;
+	direction = LEFT;
+	x.push_back(x1);
+	y.push_back(y1);
+	d.change_state(x1, y1, 4);
+	for (int i = 1; i < 5; i++)
+	{
+		x.push_back(x1 + i);
+		y.push_back(y1);
+		d.change_state(x1 + i, y1, 3);
+	}
+	x_tail = x1 + 5;
+	y_tail = y1;
+}
+
+Snake::Snake(Game_field &d1) : d(d1)
+{
+	srand(time(NULL));
+	life = true;
+	length = 5;
+	direction = LEFT;
+	int N = d.get_sizeN();
+	int M = d.get_sizeM();
+	int temp_x = 2 + rand() % (M - 6);
+	int temp_y = 2 + rand() % (N - 2);
+	x.push_back(temp_x);
+	y.push_back(temp_y);
+	d.change_state(temp_x, temp_y, 4);
+	for (int i = 1; i < 5; i++)
+	{
+		x.push_back(temp_x + i);
+		y.push_back(temp_y);
+		d.change_state(temp_x + i, temp_y, 3);
+	}
+	x_tail = temp_x + 5;
+	y_tail = temp_y;
 }
 
 bool Snake::nom_nom()

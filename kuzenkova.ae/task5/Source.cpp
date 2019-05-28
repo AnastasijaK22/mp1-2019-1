@@ -10,6 +10,7 @@ int main()
 	setlocale(LC_ALL, "Rus");
 	char s[11] = "task5.txt";
 	Storage temp(s);
+	Cashbox::set_storage(temp);
 	temp.print_barcodes();
 	int a;
 	Cashbox d;
