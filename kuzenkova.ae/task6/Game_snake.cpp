@@ -15,14 +15,14 @@ void The_Lord_of_the_Snakes::set_win_length(int l)
 	win_length = l;
 }
 
-void The_Lord_of_the_Snakes::Campany()
+void The_Lord_of_the_Snakes::campany()
 {
 	while (1 > 0)
 	{
 		system("cls");
 		int a;
 		for (int i = 0; i < 5; i++)
-			if (campany[i] == 1)
+			if (levels_campany[i] == 1)
 				cout << "        level " << i + 1 << endl;
 		cout << "        назад - 0" << endl;
 		cout << "  ";
@@ -41,7 +41,7 @@ void The_Lord_of_the_Snakes::Campany()
 			}
 			if (a == 0)
 				break;
-			if (campany[a - 1] == 1)
+			if (levels_campany[a - 1] == 1)
 				break;
 		}
 		if (a == 0) break;
@@ -53,7 +53,7 @@ void The_Lord_of_the_Snakes::Campany()
 		Game_field d(temp);
 		Snake h(temp, d);
 		win_length = 15 + 5 * a;
-		bool flag = Game(d, h);
+		bool flag = game(d, h);
 		system("cls");
 		if (flag == false)
 			cout << "    Ты проиграл салага!" << endl;
@@ -61,7 +61,7 @@ void The_Lord_of_the_Snakes::Campany()
 		{
 			cout << "    Ты победил салага!" << endl;
 			if (a != 5)
-				campany[a] = 1;
+				levels_campany[a] = 1;
 		}
 		cout << "Хотите продолжить кампанию? 1 -да, 0 -нет" << endl;
 		while (1 > 0)
@@ -74,12 +74,12 @@ void The_Lord_of_the_Snakes::Campany()
 					break;
 			}
 		}
-		d.Clear_field();
+		d.clear_field();
 		if (a == 0) break;
 	}
 }
 
-void The_Lord_of_the_Snakes::Common()
+void The_Lord_of_the_Snakes::common()
 {
 	system("cls");
 	cout << " Установите размер игрового окна (от 10 до 70)" << endl;
@@ -105,7 +105,7 @@ void The_Lord_of_the_Snakes::Common()
 	} while (!temp);
 	Game_field d(sizeN, sizeM);
 	Snake h(d);
-	bool flag = Game(d, h);
+	bool flag = game(d, h);
 	system("cls");
 	if (flag == false)
 		cout << "    Ты проиграл салага!" << endl;
@@ -114,18 +114,18 @@ void The_Lord_of_the_Snakes::Common()
 		cout << "    Ты победил салага!" << endl;
 	}
 	_getch();
-	d.Clear_field();
+	d.clear_field();
 }
 
-bool The_Lord_of_the_Snakes::Game(Game_field &d, Snake &h)
+bool The_Lord_of_the_Snakes::game(Game_field &d, Snake &h)
 {
 	system("cls");
 	COORD position = { 0,0 };
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	d.generate_nom_nom();
+	d.generate_food();
 	int direction = 0;
 	char c;
-	d.Draw_field();
+	d.draw_field();
 	cout << "Для начала нажмите любую клавишу" << endl;
 	_getch();
 	_getch();
@@ -145,9 +145,9 @@ bool The_Lord_of_the_Snakes::Game(Game_field &d, Snake &h)
 				h.change_direction(direction);
 		}
 		Sleep(175);
-		h.Move();
-		d.Draw_nom_nom();
-		h.Draw_snake();
+		h.move();
+		d.draw_food();
+		h.redraw_snake();
 		if (l != h.snake_length())
 		{
 			SetConsoleCursorPosition(hConsole, position);
@@ -167,11 +167,11 @@ The_Lord_of_the_Snakes::The_Lord_of_the_Snakes()
 	win_length = 0;
 	sizeN = 0;
 	sizeM = 0;
-	campany[0] = 1;
+	levels_campany[0] = 1;
 	for (int i = 1; i < 5; i++)
-		campany[i] = 0;
+		levels_campany[i] = 0;
 }
-void The_Lord_of_the_Snakes::Menu()
+void The_Lord_of_the_Snakes::menu()
 {
 	while (1 > 0)
 	{
@@ -193,9 +193,9 @@ void The_Lord_of_the_Snakes::Menu()
 			}
 		}
 		if (a == '2')
-			Campany();
+			campany();
 		if (a == '1')
-			Common();
+			common();
 		if (a == '0')
 			break;
 	}

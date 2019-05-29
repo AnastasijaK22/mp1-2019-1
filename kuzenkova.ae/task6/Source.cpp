@@ -15,7 +15,7 @@ int main()
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	system("color F0");
 	The_Lord_of_the_Snakes o;
-	o.Menu();
+	o.menu();
 	Sleep(100);
 	std::cin.ignore();
 	return 0;

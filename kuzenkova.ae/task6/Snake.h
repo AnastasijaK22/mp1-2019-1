@@ -11,17 +11,17 @@ class Snake
 	int direction;
 	int x_tail;
 	int y_tail;
-	Game_field &d;
+	Game_field &snake_field;
 	Snake& operator=(const Snake &s) {};
 	// метод - покушать
-	bool nom_nom();
+	bool food_ahead();
 	// метод - будет ли змейка жива если продолжит двигаться в заданном направлении
-	bool to_be_or_not_to_be();
+	bool obstacle_ahead();
 public:
 	// конструктор инициализатор
-	Snake(string s, Game_field &d1);
+	Snake(string s, Game_field &_snake_field);
 	// конструктор инициализатор
-	Snake(Game_field &d1);
+	Snake(Game_field &_snake_field);
 	// метод - изменить направление движения
 	void change_direction(int _direction)
 	{
@@ -29,11 +29,11 @@ public:
 			direction = _direction;
 	}
 	// метод - переместиться
-	void Move();
+	void move();
 	// метод - жива ли змейка
 	bool am_i_alive() const { return life; }
 	// метод - узнать длину змейки
 	int snake_length() const { return length; }
 	// метод - нарисовать змейку
-	void Draw_snake();
+	void redraw_snake();
 };

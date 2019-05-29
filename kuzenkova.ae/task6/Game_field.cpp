@@ -1,6 +1,6 @@
 #include "Game_field.h"
 
-void Square::Draw() const
+void Square::draw() const
 {
 	RECT kletochka;
 	kletochka.left = left;
@@ -78,21 +78,21 @@ void Game_field::set_size_field(int _N, int _M)
 	*this = temp;
 }
 
-void Game_field::Draw_field() const
+void Game_field::draw_field() const
 {
 	for (int i = 0; i < M; i++)
 		for (int j = 0; j < N; j++)
-			Draw_square(i, j);
+			draw_square(i, j);
 }
 
-void Game_field::Clear_field()
+void Game_field::clear_field()
 {
 	int temp = 0;
 	if (N >= M)
 		temp = N;
 	else temp = M;
 	Square a(70, 70, (temp) * 10);
-	a.Draw();
+	a.draw();
 }
 
 void Game_field::change_state(int i, int j, int _state)
@@ -104,7 +104,7 @@ void Game_field::change_state(int i, int j, int _state)
 	field[j][i].change_state(_state);
 }
 
-void Game_field::generate_nom_nom()
+void Game_field::generate_food()
 {
 	srand(time(NULL));
 	int k = 1 + rand() % (empty_squares);

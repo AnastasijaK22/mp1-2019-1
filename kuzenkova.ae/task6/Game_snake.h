@@ -45,20 +45,20 @@ class The_Lord_of_the_Snakes
 {
 	int sizeN, sizeM;
 	int win_length;
-	int campany[5];
+	int levels_campany[5];
 	// метод - установить размер
 	void set_size(int N, int M);
 	// метод - установить победную длину
 	void set_win_length(int l);
 	// метод - запустить кампанию
-	void Campany();
+	void campany();
 	// метод - запустить обычную игру
-	void Common();
+	void common();
 	// метод - игра
-	bool Game(Game_field &d, Snake &h);
+	bool game(Game_field &d, Snake &h);
 public:
 	// конструктор по умолчанию
 	The_Lord_of_the_Snakes();
 	// метод - запустить меню
-	void Menu();
+	void menu();
 };

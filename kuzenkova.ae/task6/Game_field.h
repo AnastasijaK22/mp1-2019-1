@@ -34,7 +34,7 @@ public:
 			throw "Неверно введено состояние";
 	}
 	// метод - нарисовать квадрат
-	void Draw() const;
+	void draw() const;
 	// метод - изменить координаты
 	void change_coordinate(int x1, int y1);
 	// метод - изменить состояние
@@ -70,17 +70,17 @@ public:
 	// метод - вернуть число столбцов в поле
 	int get_sizeM() const { return M - 2; }
 	// метод - нарисовать выбранный квадрат поля
-	void Draw_square(int i, int j) const { field[j][i].Draw(); }
+	void draw_square(int i, int j) const { field[j][i].draw(); }
 	// метод - нарисовать поле полностью
-	void Draw_field() const;
+	void draw_field() const;
 	// метод - нарисовать еду
-	void Draw_nom_nom() const { field[y_nom][x_nom].Draw(); }
+	void draw_food() const { field[y_nom][x_nom].draw(); }
 	// метод - закрасить поле 
-	void Clear_field();
+	void clear_field();
 	// метод - изменить состояние выбранного квадрата
 	void change_state(int i, int j, int _state);
 	// метод - получить состояние выбранного квадрата
 	int get_state(int i, int j) const { return field[j][i].get_state(); }
 	// метод - сгенерировать еду
-	void generate_nom_nom();
+	void generate_food();
 };
