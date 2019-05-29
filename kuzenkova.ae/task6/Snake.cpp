@@ -1,10 +1,10 @@
-#include "Snake.h"
+ï»¿#include "Snake.h"
 
 Snake::Snake(string s, Game_field &_snake_field) : snake_field(_snake_field)
 {
 	ifstream fin(s);
 	if (!fin.is_open())
-		throw "íåò òàêîãî ôàéëà\n";
+		throw "Ð½ÐµÑ‚ Ñ‚Ð°ÐºÐ¾Ð³Ð¾ Ñ„Ð°Ð¹Ð»Ð°\n";
 	int x1;
 	int y1;
 	fin >> x1;

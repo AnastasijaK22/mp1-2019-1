@@ -1,4 +1,4 @@
-#include "Game_field.h"
+п»ї#include "Game_field.h"
 
 void Square::draw() const
 {
@@ -52,7 +52,7 @@ Game_field::Game_field(string s)
 {
 	ifstream fin(s);
 	if (!fin.is_open())
-		throw "нет такого файла\n";
+		throw "РЅРµС‚ С‚Р°РєРѕРіРѕ С„Р°Р№Р»Р°\n";
 	int x = 0, y = 0;
 	int _N;
 	int temp;

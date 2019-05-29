@@ -1,4 +1,4 @@
-#include "Game_snake.h"
+ï»¿#include "Game_snake.h"
 
 void The_Lord_of_the_Snakes::set_size(int N, int M)
 {
@@ -24,7 +24,7 @@ void The_Lord_of_the_Snakes::campany()
 		for (int i = 0; i < 5; i++)
 			if (levels_campany[i] == 1)
 				cout << "        level " << i + 1 << endl;
-		cout << "        íàçàä - 0" << endl;
+		cout << "        Ð½Ð°Ð·Ð°Ð´ - 0" << endl;
 		cout << "  ";
 		while (1 > 0)
 		{
@@ -56,14 +56,14 @@ void The_Lord_of_the_Snakes::campany()
 		bool flag = game(d, h);
 		system("cls");
 		if (flag == false)
-			cout << "    Òû ïðîèãðàë ñàëàãà!" << endl;
+			cout << "    Ð¢Ñ‹ Ð¿Ñ€Ð¾Ð¸Ð³Ñ€Ð°Ð» ÑÐ°Ð»Ð°Ð³Ð°!" << endl;
 		else
 		{
-			cout << "    Òû ïîáåäèë ñàëàãà!" << endl;
+			cout << "    Ð¢Ñ‹ Ð¿Ð¾Ð±ÐµÐ´Ð¸Ð» ÑÐ°Ð»Ð°Ð³Ð°!" << endl;
 			if (a != 5)
 				levels_campany[a] = 1;
 		}
-		cout << "Õîòèòå ïðîäîëæèòü êàìïàíèþ? 1 -äà, 0 -íåò" << endl;
+		cout << "Ð¥Ð¾Ñ‚Ð¸Ñ‚Ðµ Ð¿Ñ€Ð¾Ð´Ð¾Ð»Ð¶Ð¸Ñ‚ÑŒ ÐºÐ°Ð¼Ð¿Ð°Ð½Ð¸ÑŽ? 1 -Ð´Ð°, 0 -Ð½ÐµÑ‚" << endl;
 		while (1 > 0)
 		{
 			if (_kbhit())
@@ -82,7 +82,7 @@ void The_Lord_of_the_Snakes::campany()
 void The_Lord_of_the_Snakes::common()
 {
 	system("cls");
-	cout << " Óñòàíîâèòå ðàçìåð èãðîâîãî îêíà (îò 10 äî 70)" << endl;
+	cout << " Ð£ÑÑ‚Ð°Ð½Ð¾Ð²Ð¸Ñ‚Ðµ Ñ€Ð°Ð·Ð¼ÐµÑ€ Ð¸Ð³Ñ€Ð¾Ð²Ð¾Ð³Ð¾ Ð¾ÐºÐ½Ð° (Ð¾Ñ‚ 10 Ð´Ð¾ 70)" << endl;
 	int n, m;
 	int l;
 	bool temp = true;
@@ -93,13 +93,13 @@ void The_Lord_of_the_Snakes::common()
 		{
 			cin >> n >> m;
 			set_size(n, m);
-			cout << "Ââåäè ïîáåäíóþ äëèíó" << endl;
+			cout << "Ð’Ð²ÐµÐ´Ð¸ Ð¿Ð¾Ð±ÐµÐ´Ð½ÑƒÑŽ Ð´Ð»Ð¸Ð½Ñƒ" << endl;
 			cin >> l;
 			set_win_length(l);
 		}
 		catch (int s)
 		{
-			cout << "Ââåäåíû íåâåðíî ðàçìåðû" << endl;;
+			cout << "Ð’Ð²ÐµÐ´ÐµÐ½Ñ‹ Ð½ÐµÐ²ÐµÑ€Ð½Ð¾ Ñ€Ð°Ð·Ð¼ÐµÑ€Ñ‹" << endl;;
 			temp = false;
 		}
 	} while (!temp);
@@ -108,10 +108,10 @@ void The_Lord_of_the_Snakes::common()
 	bool flag = game(d, h);
 	system("cls");
 	if (flag == false)
-		cout << "    Òû ïðîèãðàë ñàëàãà!" << endl;
+		cout << "    Ð¢Ñ‹ Ð¿Ñ€Ð¾Ð¸Ð³Ñ€Ð°Ð» ÑÐ°Ð»Ð°Ð³Ð°!" << endl;
 	else
 	{
-		cout << "    Òû ïîáåäèë ñàëàãà!" << endl;
+		cout << "    Ð¢Ñ‹ Ð¿Ð¾Ð±ÐµÐ´Ð¸Ð» ÑÐ°Ð»Ð°Ð³Ð°!" << endl;
 	}
 	_getch();
 	d.clear_field();
@@ -126,15 +126,15 @@ bool The_Lord_of_the_Snakes::game(Game_field &d, Snake &h)
 	int direction = 0;
 	char c;
 	d.draw_field();
-	cout << "Äëÿ íà÷àëà íàæìèòå ëþáóþ êëàâèøó" << endl;
+	cout << "Ð”Ð»Ñ Ð½Ð°Ñ‡Ð°Ð»Ð° Ð½Ð°Ð¶Ð¼Ð¸Ñ‚Ðµ Ð»ÑŽÐ±ÑƒÑŽ ÐºÐ»Ð°Ð²Ð¸ÑˆÑƒ" << endl;
 	_getch();
 	_getch();
 	SetConsoleCursorPosition(hConsole, position);
 	cout << "                                " << endl;
 	SetConsoleCursorPosition(hConsole, position);
 	int l = h.snake_length();
-	cout << "Òåêóùàÿ äëèíà çìåéêè: " << l << endl;
-	cout << "Ïîáåäíàÿ äëèíà: " << win_length << endl;
+	cout << "Ð¢ÐµÐºÑƒÑ‰Ð°Ñ Ð´Ð»Ð¸Ð½Ð° Ð·Ð¼ÐµÐ¹ÐºÐ¸: " << l << endl;
+	cout << "ÐŸÐ¾Ð±ÐµÐ´Ð½Ð°Ñ Ð´Ð»Ð¸Ð½Ð°: " << win_length << endl;
 	while ((h.am_i_alive()) && (h.snake_length() < win_length))
 	{
 		if (_kbhit())
@@ -152,8 +152,8 @@ bool The_Lord_of_the_Snakes::game(Game_field &d, Snake &h)
 		{
 			SetConsoleCursorPosition(hConsole, position);
 			l++;
-			cout << "Òåêóùàÿ äëèíà çìåéêè: " << l << endl;
-			cout << "Ïîáåäíàÿ äëèíà: " << win_length << endl;
+			cout << "Ð¢ÐµÐºÑƒÑ‰Ð°Ñ Ð´Ð»Ð¸Ð½Ð° Ð·Ð¼ÐµÐ¹ÐºÐ¸: " << l << endl;
+			cout << "ÐŸÐ¾Ð±ÐµÐ´Ð½Ð°Ñ Ð´Ð»Ð¸Ð½Ð°: " << win_length << endl;
 		}
 	}
 	if (!h.am_i_alive())
@@ -176,11 +176,11 @@ void The_Lord_of_the_Snakes::menu()
 	while (1 > 0)
 	{
 		system("cls");
-		cout << "      Äîáðî ïîæàëîâàòü!       " << endl;
+		cout << "      Ð”Ð¾Ð±Ñ€Ð¾ Ð¿Ð¾Ð¶Ð°Ð»Ð¾Ð²Ð°Ñ‚ÑŒ!       " << endl;
 		cout << endl;
-		cout << "      Îáû÷íàÿ èãðà - 1        " << endl;
-		cout << "      Êàìïàíèÿ     - 2        " << endl;
-		cout << "      Âûõîä - 0               " << endl;
+		cout << "      ÐžÐ±Ñ‹Ñ‡Ð½Ð°Ñ Ð¸Ð³Ñ€Ð° - 1        " << endl;
+		cout << "      ÐšÐ°Ð¼Ð¿Ð°Ð½Ð¸Ñ     - 2        " << endl;
+		cout << "      Ð’Ñ‹Ñ…Ð¾Ð´ - 0               " << endl;
 		char a;
 		cout << "      ";
 		while (1 > 0)
